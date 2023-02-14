@@ -9,12 +9,10 @@ import styles from "./string.module.css";
 export const StringComponent: React.FC = () => {
   const [inputValue, setInputValue] = useState<string>('');
   const [isShown, setShown] = useState<boolean>(false);
-  const refq = useRef<HTMLInputElement>(null);
 
   const onClick = () => {
-    const a = refq;
-    console.log(a)
-    setShown(true)
+    setShown(true);
+    reverceString(letters)
   };
 
   const onChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -23,29 +21,38 @@ export const StringComponent: React.FC = () => {
 
   const letters = inputValue.split('');
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      letters.sort();
-      setInputValue(letters.join(''))
-      console.log(letters)
-    }, 1000)
+  const reverceString = (arr: string[]): string[] => {
+    let start = 0;
+    let end = arr.length - 1;
 
-    return () => clearInterval(interval)
-  }, [])
-
+    while (start < end) {
+      setTimeout(() =>{
+        swap(arr, start, end)
+        
+      start++;
+      end--;}, 1000)
+    }
+    return arr
+  }
+ const swap = (arr: string[], firstIndex: number, secondIndex: number): void =>  {
+  const temp = arr[firstIndex];
+  arr[firstIndex] = arr[secondIndex];
+  arr[secondIndex] = temp;
+  setInputValue(arr.join(''))
+ }
 
   return (
     <>
       <SolutionLayout title="Строка">
         <div className={styles.input}>
-          <Input maxLength={11} ref={refq} onChange={onChange} type="text" />
+          <Input maxLength={11} onChange={e => onChange(e)} type="text" />
           <Button text={'Развернуть'} onClick={onClick} />
         </div>
         {isShown &&
           <ul className={styles.circle}>
             {letters.map((letter, index) => {
               return (
-                <li>< Circle letter={letter} key={index}/></li>
+                <li>< Circle letter={letter} key={index} /></li>
               )
             })}
           </ul>
