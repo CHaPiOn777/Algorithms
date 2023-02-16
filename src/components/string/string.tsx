@@ -1,66 +1,85 @@
 import React, { FormEvent, SetStateAction, useEffect, useMemo, useRef, useState } from "react";
 import { clearInterval } from "timers";
+import { ElementStates } from "../../types/element-states";
 import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
 import { Input } from "../ui/input/input";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import styles from "./string.module.css";
 
+type TWord = Array<{
+  letter: string;
+  color: string;
+}>
 
 export const StringComponent: React.FC = () => {
   const [inputValue, setInputValue] = useState<string>('');
   const [isShown, setShown] = useState<boolean>(false);
-  let [i, setI] = useState<number>(0)
+  const [isShownTimeout, setShownTimeout] = useState<boolean>(false);
+  const [letters, setLetters] = useState<TWord>();
+
 
   const onClick = () => {
-    setShown(true);
-    reverceString(letters)
+
+    setShownTimeout(true);
   };
 
   const onChange = (e: React.FormEvent<HTMLInputElement>) => {
     setInputValue(e.currentTarget.value)
   }
 
-  const letters = inputValue.split('');
+  useEffect(() => {
+    let interval: NodeJS.Timeout | null = null;
+    if (isShownTimeout) {
+      const word = Array.from(inputValue).map((letter) => {
+        return { letter: letter, color: 'default' }
+      });
+      setLetters(word);
+      let start = 0;
+      let end = inputValue.length - 1;
+      
+      interval = setInterval(() => {
 
-  const reverceString = (arr: string[]): string[] => {
+        if (start < end) {
+          setLetters((oldLetters) => {
+            let i = start;
+            let j = end;
+            const newLetters = [...oldLetters!];
 
-    let start = 0;
-    let end = arr.length - 1;
+            
+            swap(newLetters, start, end);
+            return newLetters
+          })
+          start++;
+          end--;
 
-    while (start < end) {
-      swap(arr, start, end);
-      start++;
-      end--;
+        } else {
+          setShownTimeout(false);
+
+        }
+      }, 1000)
     }
 
-
-    return arr
-  }
-  // useEffect(() => {
-  //   let o = setInterval(() => {
-  //     setI(i++)
-  //     console.log(i)
-  //     if (i >= 15) {
-  //       clearInterval(o)
-  //     }
-
-  //   }, 1000)
-  //   console.log(i >= 15)
-
-  // }, [])
+  }, [isShownTimeout])
 
 
-
-  const swap = (arr: string[], firstIndex: number, secondIndex: number): void => {
-
+  const swap = (arr: TWord, firstIndex: number, secondIndex: number): void => {
+    console.log(secondIndex, firstIndex)
+    if (firstIndex > 0) {
+      arr[secondIndex].color = arr[firstIndex].color = 'changing'
+      arr[secondIndex +1].color = arr[firstIndex - 1].color = 'modified'
+      if (secondIndex - firstIndex === 1) {
+        arr[secondIndex].color = arr[firstIndex].color = 'changing'
+        arr[secondIndex].color = arr[firstIndex].color = 'modified'
+      }
+    } else {
+      arr[secondIndex].color = arr[firstIndex].color = 'changing'
+    }
     const temp = arr[firstIndex];
     arr[firstIndex] = arr[secondIndex];
     arr[secondIndex] = temp;
-    setInterval(() => {
-      setInputValue(arr.join(''))
-
-    }, 1000)
+   
+    
   }
 
   return (
@@ -70,11 +89,14 @@ export const StringComponent: React.FC = () => {
           <Input maxLength={11} onChange={e => onChange(e)} type="text" />
           <Button text={'Развернуть'} onClick={onClick} />
         </div>
-        {isShown &&
+        {letters &&
           <ul className={styles.circle}>
-            {letters.map((letter, index) => {
+
+            {letters?.map(({ letter, color }, index) => {
+
               return (
-                <li>< Circle letter={letter} key={index} /></li>
+
+                <li>< Circle state={color} letter={letter} key={index} /></li>
               )
             })}
           </ul>
