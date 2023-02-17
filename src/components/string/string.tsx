@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { swap } from "../../constants/utils";
+import { TWord } from "../../types/strinf";
 import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
 import { Input } from "../ui/input/input";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import styles from "./string.module.css";
 
-type TWord = Array<{
-  letter: string;
-  color: string;
-  id: number;
-}>
+
 
 export const StringComponent: React.FC = () => {
   const [inputValue, setInputValue] = useState<string>('');
@@ -37,8 +35,6 @@ export const StringComponent: React.FC = () => {
       setInterval(() => {
         if (start <= end) {
           setLetters((oldLetters) => {
-            let i = start;
-            let j = end;
             const newLetters = [...oldLetters!];
             swap(newLetters, start, end);
 
@@ -55,43 +51,26 @@ export const StringComponent: React.FC = () => {
 
   }, [isShownTimeout])
 
-  const colorSwap = (arr: TWord, firstIndex: number, secondIndex: number): void => {
-    arr[secondIndex].color = arr[firstIndex].color = 'changing';
-    if (secondIndex === firstIndex) {
-      arr[secondIndex].color = 'modified';
-    }
-    if (secondIndex - firstIndex < 2) {
-      arr[secondIndex].color = arr[firstIndex].color = 'modified';
-    }
-    if (firstIndex !== 0) {
-      arr[secondIndex + 1].color = arr[firstIndex - 1].color = 'modified';
-    }
-  }
-  const swap = (arr: TWord, firstIndex: number, secondIndex: number): void => {
-    const temp = arr[firstIndex];
-    arr[firstIndex] = arr[secondIndex];
-    arr[secondIndex] = temp;
-    colorSwap(arr, firstIndex, secondIndex)
-  }
+
 
   return (
-    <>
-      <SolutionLayout title="Строка">
-        <div className={styles.input}>
-          <Input maxLength={11} onChange={e => onChange(e)} type="text" />
-          <Button text={'Развернуть'} onClick={onClick} />
-        </div>
-        {letters &&
-          <ul className={styles.circle}>
 
-            {letters?.map(({ letter, color, id }, index) => {
-              return (
-                <li>< Circle state={color} letter={letter} key={id} /></li>
-              )
-            })}
-          </ul>
-        }
-      </SolutionLayout>
-    </>
+    <SolutionLayout title="Строка">
+      <div className={styles.input}>
+        <Input maxLength={11} onChange={e => onChange(e)} type="text" />
+        <Button text={'Развернуть'} onClick={onClick} />
+      </div>
+      {letters &&
+        <ul className={styles.circle}>
+
+          {letters?.map(({ letter, color, id }) => {
+            return (
+              <li>< Circle state={color} letter={letter} key={id} /></li>
+            )
+          })}
+        </ul>
+      }
+    </SolutionLayout>
+
   );
 };
