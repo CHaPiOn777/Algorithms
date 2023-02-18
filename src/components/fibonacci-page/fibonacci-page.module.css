@@ -6,7 +6,7 @@
 }
 .circle {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     flex-wrap: wrap;
     list-style-type: none;
     margin: 0 auto;

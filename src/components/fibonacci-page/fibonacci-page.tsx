@@ -37,7 +37,7 @@ export const FibonacciPage: React.FC = () => {
     if (isShownTimeout) {
       let i = 1;
       setFiboN([])
-      
+
       interval = setInterval(() => {
         if (i <= inputValue + 1) {
           setFiboN((oldFibo) => {
@@ -47,7 +47,7 @@ export const FibonacciPage: React.FC = () => {
           })
           i++
         } else {
-          setShownTimeout(false)
+          setShownTimeout(false);
         }
       }, 500)
     }
@@ -55,17 +55,19 @@ export const FibonacciPage: React.FC = () => {
       if (interval) clearInterval(interval)
     })
 
-  }, [isShownTimeout])
+  }, [isShownTimeout]);
+
+  const validation = ((inputValue > 19) || (inputValue < 0)) ? true : false;
 
   return (
     <SolutionLayout title="Последовательность Фибоначчи">
       <div className={styles.input}>
-        <Input maxLength={11} onChange={e => onChange(e)} type="text" />
-        <Button text={'Развернуть'} onClick={onClick} />
+        <Input max={19} isLimitText={true} type='number' onChange={e => onChange(e)} />
+          <Button text={'Развернуть'} isLoader={isShownTimeout} onClick={onClick} disabled={validation}/>
+        
       </div>
       {fiboN &&
         <ul className={styles.circle}>
-
           {fiboN?.map((number, index) => {
             return (
               <li>< Circle index={index} letter={number} key={index} /></li>

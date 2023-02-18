@@ -24,6 +24,8 @@ export const StringComponent: React.FC = () => {
   }
 
   useEffect(() => {
+    let interval: NodeJS.Timeout;;
+
     if (isShownTimeout) {
       const word = Array.from(inputValue).map((letter, index) => {
         return { letter: letter, color: 'default', id: index }
@@ -32,33 +34,42 @@ export const StringComponent: React.FC = () => {
       let start = 0;
       let end = inputValue.length - 1;
 
-      setInterval(() => {
+      interval = setInterval(() => {
+        
         if (start <= end) {
+
           setLetters((oldLetters) => {
             const newLetters = [...oldLetters!];
             swap(newLetters, start, end);
-
             return newLetters
           })
           start++;
           end--;
+
         } else {
           setShownTimeout(false);
         }
       }, 1000)
-    }
 
+      // 
+    } 
+    return (() => {
+      if (interval) clearInterval(interval)
+    })
 
   }, [isShownTimeout])
-
-
 
   return (
 
     <SolutionLayout title="Строка">
       <div className={styles.input}>
-        <Input maxLength={11} onChange={e => onChange(e)} type="text" />
-        <Button text={'Развернуть'} onClick={onClick} />
+        <Input isLimitText={true} maxLength={11} onChange={e => onChange(e)} type="text" />
+        {console.log(isShownTimeout)}
+        {isShownTimeout ?
+          <Button isLoader={true} /> :
+          <Button text={'Развернуть'} onClick={onClick} isLoader={false}/>
+        }
+
       </div>
       {letters &&
         <ul className={styles.circle}>
