@@ -64,7 +64,6 @@ export const StringComponent: React.FC = () => {
     <SolutionLayout title="Строка">
       <div className={styles.input}>
         <Input isLimitText={true} maxLength={11} onChange={e => onChange(e)} type="text" />
-        {console.log(isShownTimeout)}
         {isShownTimeout ?
           <Button isLoader={true} /> :
           <Button text={'Развернуть'} onClick={onClick} isLoader={false}/>

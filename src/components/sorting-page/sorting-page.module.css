@@ -1,0 +1,29 @@
+.input {
+    margin: 0 auto;
+    gap: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btnLeft {
+    margin-left: 52px;
+}
+.btn {
+    min-width: 205px;
+}
+.radio {
+    margin-left: 46px;
+}
+.btnNewArr {
+    margin-left: 80px;
+}
+.column {
+    margin: 0 auto;
+    margin-top: 48px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    list-style-type: none;
+    align-items: flex-end;
+    height: 340px;
+}
