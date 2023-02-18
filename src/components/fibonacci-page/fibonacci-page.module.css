@@ -1,0 +1,17 @@
+.input {
+    margin: 0 auto;
+    max-width: 567px;
+    gap: 12px;
+    display: flex;
+}
+.circle {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    list-style-type: none;
+    margin: 0 auto;
+    margin-top: 120px;
+    padding: 0;
+    gap: 48px 16px;
+    max-width: 944px;
+}
