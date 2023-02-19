@@ -1,3 +1,4 @@
+import { TNumber } from "../components/sorting-page/sorting-page";
 import { TWord } from "../types/strinf";
 
 export const colorSwap = (arr: TWord, firstIndex: number, secondIndex: number): void => {
@@ -12,9 +13,9 @@ export const colorSwap = (arr: TWord, firstIndex: number, secondIndex: number): 
       arr[secondIndex + 1].color = arr[firstIndex - 1].color = 'modified';
     }
   }
-  export const swap = (arr: TWord, firstIndex: number, secondIndex: number): void => {
+  export const swap = (arr: TWord | TNumber, firstIndex: number, secondIndex: number): void => {
     const temp = arr[firstIndex];
     arr[firstIndex] = arr[secondIndex];
     arr[secondIndex] = temp;
-    colorSwap(arr, firstIndex, secondIndex)
+    
   }

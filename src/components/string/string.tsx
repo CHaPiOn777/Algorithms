@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { swap } from "../../constants/utils";
+import { colorSwap, swap } from "../../constants/utils";
 import { TWord } from "../../types/strinf";
 import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
@@ -37,10 +37,10 @@ export const StringComponent: React.FC = () => {
       interval = setInterval(() => {
         
         if (start <= end) {
-
           setLetters((oldLetters) => {
             const newLetters = [...oldLetters!];
             swap(newLetters, start, end);
+            colorSwap(newLetters, start, end)
             return newLetters
           })
           start++;
