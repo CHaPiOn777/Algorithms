@@ -88,7 +88,7 @@ export const SortingPage: React.FC = () => {
 
   const selectionSort = (arr: TNumber, ascending: boolean) => {
     let i = 0;
-    let j = 0;
+    let j = 1;
     let interval: NodeJS.Timeout;
     const end = arr.length;
 
@@ -96,20 +96,21 @@ export const SortingPage: React.FC = () => {
       if (i < end) {
         if (j < end) {
           if (ascending) {
-            if (arr[i].number < arr[j].number) {
+            if (arr[j].number < arr[i].number) {
               swap(arr, i, j);
               setArr([...arr!])
             }
           } else {
-            if (arr[i].number > arr[j].number) {
+            if (arr[j].number > arr[i].number) {
               swap(arr, i, j)
               setArr([...arr!])
             }
           }
           arr[j].color = arr[i].color ='changing';
-          if ((j !== 0) && (j - 1 !== i)) {
+          if (j - i > 1) {
             arr[j - 1].color = 'default'
           }
+
           // if (j === end - i - 1) {
           //   arr[j].color = 'default'
           //   arr[j + 1].color = 'modified'
@@ -117,13 +118,16 @@ export const SortingPage: React.FC = () => {
           setArr([...arr]);
           j++
         } else {
-          j = 0
-          i++
+          arr[end - 1].color = 'default'
+          arr[i].color ='modified';
+          setArr([...arr]);
+          i++;
+          j = i + 1;
         }
       } else {
         clearInterval(interval)
       }
-    }, 1000)
+    }, 300)
   }
 
   const choiceSort = (ascending: boolean) => {
