@@ -1,0 +1,34 @@
+.stack {
+    
+
+}
+
+.input {
+    margin: 0 auto;
+    gap: 12px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+.btnLeft {
+    margin-left: 52px;
+}
+.btn {
+    min-width: 205px;
+}
+.radio {
+    margin-left: 46px;
+}
+.btnNewArr {
+    margin-left: 80px;
+}
+.circle {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    list-style-type: none;
+    margin: 0 auto;
+    margin-top: 120px;
+    padding: 0;
+    gap: 16px;
+}
