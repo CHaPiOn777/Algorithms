@@ -1,17 +1,17 @@
-import React, { SetStateAction, useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { swap } from "../../constants/utils";
-import { Direction } from "../../types/direction";
-import { TWord } from "../../types/strinf";
+import { Direction } from "../../types/direction"
 import { Button } from "../ui/button/button";
 import { Column } from "../ui/column/column";
-import { AscendingIcon } from "../ui/icons/ascending-icon";
 import { RadioInput } from "../ui/radio-input/radio-input";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
-import styles from './sorting-page.module.css'
+import styles from './sorting-page.module.css';
+
 export type TNumber = Array<{
   number: number;
   color: string
 }>
+
 export const SortingPage: React.FC = () => {
   const [checked, setChecked] = useState<string>('1');
   const [arrNuumber, setArr] = useState<TNumber>();
@@ -85,7 +85,6 @@ export const SortingPage: React.FC = () => {
     }, 200)
   }
 
-
   const selectionSort = (arr: TNumber, ascending: boolean) => {
     let i = 0;
     let j = 1;
@@ -110,11 +109,6 @@ export const SortingPage: React.FC = () => {
           if (j - i > 1) {
             arr[j - 1].color = 'default'
           }
-
-          // if (j === end - i - 1) {
-          //   arr[j].color = 'default'
-          //   arr[j + 1].color = 'modified'
-          // }
           setArr([...arr]);
           j++
         } else {
@@ -142,7 +136,6 @@ export const SortingPage: React.FC = () => {
     setChange(!change)
   }
 
-  console.log(arrNuumber)
 
   return (
     <SolutionLayout title="Сортировка массива">

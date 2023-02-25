@@ -1,3 +1,4 @@
+import { resolve } from "path";
 import { TNumber } from "../components/sorting-page/sorting-page";
 import { TWord } from "../types/strinf";
 
@@ -19,3 +20,7 @@ export const colorSwap = (arr: TWord, firstIndex: number, secondIndex: number): 
     arr[secondIndex] = temp;
     
   }
+
+  export const delay = (ms: number) => new Promise<void> (
+    resolve => setTimeout(resolve, ms)
+  )

@@ -63,8 +63,8 @@ export const FibonacciPage: React.FC = () => {
     <SolutionLayout title="Последовательность Фибоначчи">
       <div className={styles.input}>
         <Input max={19} isLimitText={true} type='number' onChange={e => onChange(e)} />
-          <Button text={'Развернуть'} isLoader={isShownTimeout} onClick={onClick} disabled={validation}/>
-        
+        <Button text={'Развернуть'} isLoader={isShownTimeout} onClick={onClick} disabled={validation} />
+
       </div>
       {fiboN &&
         <ul className={styles.circle}>
