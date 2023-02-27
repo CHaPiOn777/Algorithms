@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { delay } from "../../constants/utils";
 import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
 import { Input } from "../ui/input/input";
-import { RadioInput } from "../ui/radio-input/radio-input";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { Queue } from "./class";
 
@@ -57,12 +56,13 @@ export const QueuePage: React.FC = () => {
 
   return (
     <SolutionLayout title="Стек">
-      <form className={styles.input} onClick={(e) => e.preventDefault()}>
+      <form className={styles.input} onSubmit={(e) => e.preventDefault()}>
         <Input
           isLimitText={true}
           maxLength={4}
           onChange={e => onChange(e)}
-          type="text" value={inputValue}
+          type="text" 
+          value={inputValue}
         />
         <Button
           text='Добавить'
