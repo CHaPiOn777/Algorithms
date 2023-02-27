@@ -13,40 +13,47 @@ import styles from './queue-page.module.css';
 const time = 500;
 
 export const QueuePage: React.FC = () => {
-  const queue = new Queue<string>(7);
+  const size = 8;
+  const [queue] = useState(new Queue<string>(size))
   const [inputValue, setInputValue] = useState<string>('');
   const [stack, setStack] = useState<(string | undefined)[]>(queue.printQueue());
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [currentIndex, setCurrentIndex] = useState<number | null>(null);
   const [tail, setTail] = useState<number>(queue.getTail());
+  const [head, setHead] = useState<number | null>(1);
 
-  
-console.log(stack)
+
   const onChange = (e: React.FormEvent<HTMLInputElement>) => {
-    setInputValue(e.currentTarget.value.trim());
+    setInputValue(e.currentTarget.value);
   }
 
   const addItem = async () => {
-    setInputValue('')
+    setCurrentIndex(tail);
+    setInputValue('');
+    await delay(time);
     queue.enqueue(inputValue);
     setStack([...queue.printQueue()]);
     setTail(queue.getTail());
+    setHead(queue.getHead())
+    setCurrentIndex(tail);
     await delay(time)
-    setCurrentIndex(currentIndex);
-
+    setCurrentIndex(null);
   }
   const delItem = async () => {
-    // setStack([...queue.dequeue()]);
-
+    setCurrentIndex(head);
     await delay(time);
+    queue.dequeue();
+    setStack([...queue.printQueue()]);
+    setHead(queue.getHead())
+    setCurrentIndex(null);
+  }
+  const clear = async () => {
+    queue.reset();
+    setStack([...queue.printQueue()]);
+    setHead(null);
+    setTail(queue.getTail());
+    await delay(time)
+  }
 
-  }
-  const clear = () => {
-    setStack([]);
-    setCurrentIndex(0)
-  }
-  // const peak = () => {
-  //   return st.peack();
-  // }
 
   return (
     <SolutionLayout title="Стек">
@@ -59,19 +66,20 @@ console.log(stack)
         />
         <Button
           text='Добавить'
-          onClick={addItem}
+          onClick={() => addItem()}
           disabled={inputValue ? false : true}
         />
+        {console.log(stack.length, head)}
         <Button
           text='Удалить'
           onClick={delItem}
-          disabled={stack.length ? false : true}
+          disabled={head === null ? true : head < tail ? false : true}
         />
         <Button
           text='Очистить'
           onClick={clear}
           extraClass={`${styles.btnNewArr} ${styles.btn}`}
-          disabled={stack.length ? false : true}
+          disabled={head === null ? true : false}
         />
       </form>
       {stack &&
@@ -80,7 +88,8 @@ console.log(stack)
           {stack?.map((item, index: number) => {
             return (
               <li>< Circle
-                // head={peak() === index ? "top" : ''}
+                tail={tail <= head! ? '' : tail - 1 === index ? 'tail' : ''}
+                head={head === null ? '' : head === index ? 'head' : ''}
                 letter={item === null ? '' : item}
                 key={index}
                 index={index}
