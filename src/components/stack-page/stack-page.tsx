@@ -8,6 +8,8 @@ import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { Stack } from "./class";
 import styles from './stack-page.module.css';
 
+const time = 500;
+
 export const StackPage: React.FC = () => {
   const [inputValue, setInputValue] = useState<string>('');
   const [stack, setStack] = useState<string[]>([]);
@@ -22,14 +24,14 @@ export const StackPage: React.FC = () => {
   const addItem = async () => {
     setInputValue('')
     setStack([...st.push(inputValue)]);
-    await delay(500)
+    await delay(time)
     setCurrentIndex(currentIndex + 1);
 
   }
   const delItem = async () => {
     setStack([...st.pop()]);
     setCurrentIndex(st.getSize() - 1)
-    await delay(500);
+    await delay(time);
     setCurrentIndex(st.getSize())
   }
   const clear = () => {
