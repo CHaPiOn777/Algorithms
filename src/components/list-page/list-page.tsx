@@ -17,7 +17,7 @@ export class Node<T> {
 }
 
 interface ILinkedList<T> {
-  append: (el: T) => void;
+  addTail: (el: T) => void;
   getSize: () => number;
   print?: () => void;
 }
@@ -38,18 +38,23 @@ export class LinkedList<T> implements ILinkedList<T> {
   }
 
   appendArray(values: T[]) {
-    values.forEach(value => this.append(value))
+    values.forEach(value => this.addTail(value))
   }
 
-  enqueue(element: T) {
+  addHead(element: T) {
+
     const node = new Node(element);
     let current;
     current = this.head
     this.head = node;
-    this.head!.next = current
+    this.head!.next = current;
+    this.tailIndex++;
+    this.size++;
     return this
   }
-  append(element: T) {
+
+  addTail(element: T) {
+
     const node = new Node(element);
     let current;
 
@@ -60,14 +65,42 @@ export class LinkedList<T> implements ILinkedList<T> {
       current = this.head;
       while (current.next) {
         current = current.next;
+
       }
       current.next = node;
     }
     // console.log(this.size)
     this.size++;
-    this.tailIndex++
-    return this
+    this.tailIndex++;
+
+    return this;
   }
+
+  popHead() {
+    if (!this.head) {
+      return this
+    } else {
+      this.head = this.head.next
+    }
+    this.tailIndex--;
+    this.size--;
+  }
+
+  popTail() {
+    if (!this.head) {
+      return this
+    } else {
+      let prev = this.head;
+      while(prev.next?.next) {
+        prev = prev.next
+      }
+      prev.next = null
+    }
+    this.size--;
+    this.tailIndex--;
+    return this;
+  }
+
   print() {
     let curr = this.head;
     let res = [];
@@ -75,20 +108,25 @@ export class LinkedList<T> implements ILinkedList<T> {
       res.push(`${curr.value}`);
       curr = curr.next;
     }
-    return res
+
+    return res;
   }
   getSize = () => this.size;
   getHeadIndex = () => this.headIndex;
   getTailIndex = () => this.tailIndex;
-
 }
+
+
 const firstArr = ['0', '34', '8', '1'];
+const time = 500;
+
 
 export const ListPage: React.FC = () => {
   const [list] = useState(new LinkedList<string>(firstArr));
   const [listItems, setListItems] = useState<string[]>(firstArr);
   const [inputValue, setInputValue] = useState<string>('');
   const [headSmallCircle, setHeadSmallCircle] = useState<number | null>(null);
+  const [tailSmallCircle, setTailSmallCircle] = useState<number | null>(null);
   const [headIndex, setHeadIndex] = useState<number>(list.getHeadIndex());
   const [tailIndex, setTailIndex] = useState<number>(list.getTailIndex());
   const [colorIndex, setColorIndex] = useState<number | null>(null)
@@ -98,32 +136,58 @@ export const ListPage: React.FC = () => {
   }
 
   const addTail = async () => {
-    await delay(500)
-    setHeadSmallCircle(list.getSize())
-    list.append(inputValue);
-    await delay(500);
+    setTailIndex(list.getTailIndex());
+    setHeadSmallCircle(tailIndex);
+    list.addTail(inputValue);
+    await delay(time);
     setHeadSmallCircle(null);
     setListItems(list.print());
-    setColorIndex(list.getSize());
+    setColorIndex(list.getTailIndex());
     setTailIndex(list.getTailIndex())
-    await delay(500);
+    await delay(time);
     setColorIndex(null);
   }
 
   const addHead = async () => {
-    await delay(500)
-    list.enqueue(inputValue);
+    setHeadSmallCircle(headIndex);
+    list.addHead(inputValue);
+    await delay(time)
+    setTailIndex(list.getTailIndex());
+    setHeadSmallCircle(null);
     setListItems(list.print());
+    setColorIndex(list.getHeadIndex());
+    await delay(time);
+    setColorIndex(null);
+
   }
 
+  const popTail = async () => {
+    setTailIndex(list.getTailIndex());
+    setTailSmallCircle(tailIndex);
+    list.popTail();
+    await delay(time)
+    setTailIndex(list.getTailIndex());
+    setTailSmallCircle(null);
+    setListItems(list.print());
+  }
+  const popHead = async () => {
+    setHeadIndex(list.getHeadIndex());
+    setTailSmallCircle(headIndex);
+    list.popHead();
+    await delay(time);
+    setHeadIndex(list.getHeadIndex());
+    setTailSmallCircle(null);
+    setListItems(list.print());
+    setTailIndex(list.getTailIndex());
+  }
   return (
     <SolutionLayout title="Связный список">
       <form onChange={e => e.preventDefault()} className={styles.form}>
         <Input extraClass={styles.input} maxLength={4} isLimitText={true} placeholder={'Введите значение'} onChange={e => onChange(e)} />
         <Button extraClass={styles.btn} text={'Добавить в head'} onClick={addHead} />
         <Button extraClass={styles.btn} text={'Добавить в tail'} onClick={addTail} />
-        <Button extraClass={styles.btn} text={'Удалить из head'} onClick={addTail} />
-        <Button extraClass={styles.btn} text={'Удалить из tail'} onClick={addTail} />
+        <Button extraClass={styles.btn} text={'Удалить из head'} onClick={popHead} />
+        <Button extraClass={styles.btn} text={'Удалить из tail'} onClick={popTail} />
       </form>
       <form onChange={e => e.preventDefault()} className={`${styles.form} ${styles.formIndex}`}>
         <Input extraClass={styles.input} value={''} placeholder={'Введите индекс'} onChange={e => onChange(e)} />
@@ -136,7 +200,7 @@ export const ListPage: React.FC = () => {
 
           {listItems?.map((item, index) => {
             return (
-              <li className={styles.circleItems}>
+              <li className={styles.circleItems} key={index}>
                 < Circle
                   head={
                     headSmallCircle! === index ?
@@ -147,7 +211,9 @@ export const ListPage: React.FC = () => {
                   key={index}
                   index={index}
                   state={colorIndex! === index ? 'modified' : 'default'}
-                  tail={tailIndex! === index ? 'tail' : ''}
+                  tail={tailSmallCircle! === index ?
+                    <Circle state={'changing'} letter={item} isSmall />
+                    : tailIndex! === index ? 'tail' : ''}
                 />
                 {
                   (index < listItems.length - 1) &&
