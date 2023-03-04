@@ -28,8 +28,7 @@ export class Queue<T> implements IQueue<T> {
       return this
     }
     
-    this.container[this.tail % this.size] = item
-
+    this.container[this.tail % this.size] = item;
     this.tail++;
     this.length++;
 

@@ -3,7 +3,6 @@ import { delay } from "../../constants/utils";
 import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
 import { Input } from "../ui/input/input";
-import { RadioInput } from "../ui/radio-input/radio-input";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { Stack } from "./class";
 import styles from './stack-page.module.css';
@@ -22,21 +21,22 @@ export const StackPage: React.FC = () => {
   }
 
   const addItem = async () => {
-    setInputValue('')
+    setInputValue('');
     setStack([...st.push(inputValue)]);
-    await delay(time)
+    await delay(time);
     setCurrentIndex(currentIndex + 1);
 
   }
   const delItem = async () => {
-    setStack([...st.pop()]);
-    setCurrentIndex(st.getSize() - 1)
+    setCurrentIndex(st.getSize() - 1);
+    setInputValue('')
     await delay(time);
-    setCurrentIndex(st.getSize())
+    setStack([...st.pop()]);
+    setCurrentIndex(st.getSize());
   }
   const clear = () => {
     setStack([]);
-    setCurrentIndex(0)
+    setCurrentIndex(0);
   }
   const peak = () => {
     return st.peack();
@@ -49,7 +49,8 @@ export const StackPage: React.FC = () => {
           isLimitText={true}
           maxLength={4}
           onChange={e => onChange(e)}
-          type="text" value={inputValue}
+          type="text"
+          value={inputValue}
         />
         <Button
           text='Добавить'
@@ -73,12 +74,14 @@ export const StackPage: React.FC = () => {
 
           {stack?.map((item, index: number) => {
             return (
-              <li>< Circle
-                head={peak() === index ? "top" : ''}
-                letter={item}
-                key={index}
-                index={index}
-                state={index === currentIndex ? 'changing' : 'default'} />
+              <li key={index}>
+                <Circle
+                  head={peak() === index ? "top" : ''}
+                  letter={item}
+                  key={index}
+                  index={index}
+                  state={index === currentIndex ? 'changing' : 'default'}
+                />
               </li>
             )
           })}
