@@ -1,0 +1,35 @@
+.form {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.formIndex {
+    margin-top: 12px;
+}
+.input {
+    width: 204px;
+}
+.btn {
+    width: 175px;
+}
+
+.btnIndex {
+    width: 362px;
+}
+
+.circle {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    list-style-type: none;
+    margin: 0 auto;
+    margin-top: 120px;
+    padding: 0;
+    gap: 16px;
+}
+.circleItems {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}

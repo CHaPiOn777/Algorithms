@@ -71,7 +71,6 @@ export const SortingPage: React.FC = () => {
             arr[j + 1].color = 'modified'
           }
           setArr([...arr]);
-
           j++
         } else {
           j = 0
@@ -105,7 +104,7 @@ export const SortingPage: React.FC = () => {
               setArr([...arr!])
             }
           }
-          arr[j].color = arr[i].color ='changing';
+          arr[j].color = arr[i].color = 'changing';
           if (j - i > 1) {
             arr[j - 1].color = 'default'
           }
@@ -113,7 +112,7 @@ export const SortingPage: React.FC = () => {
           j++
         } else {
           arr[end - 1].color = 'default'
-          arr[i].color ='modified';
+          arr[i].color = 'modified';
           setArr([...arr]);
           i++;
           j = i + 1;
@@ -150,7 +149,9 @@ export const SortingPage: React.FC = () => {
         <ul className={styles.column}>
           {arrNuumber?.map(({ number, color }, index) => {
             return (
-              <li><Column state={color} index={number} key={index} /></li>
+              <li key={index}>
+                <Column state={color} index={number} />
+              </li>
             )
           })}
         </ul>

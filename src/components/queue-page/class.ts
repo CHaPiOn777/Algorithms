@@ -28,8 +28,7 @@ export class Queue<T> implements IQueue<T> {
       return this
     }
     
-    this.container[this.tail % this.size] = item
-
+    this.container[this.tail % this.size] = item;
     this.tail++;
     this.length++;
 
@@ -44,8 +43,6 @@ export class Queue<T> implements IQueue<T> {
       this.head++;
       this.length--;
     }
-    
-    console.log(this.isEmpty())
   }
 
   reset = () => {
