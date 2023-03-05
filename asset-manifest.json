@@ -1,29 +1,29 @@
 {
   "files": {
-    "main.css": "/algorithms/static/css/main.f19941f8.css",
-    "main.js": "/algorithms/static/js/main.86acf078.js",
-    "static/js/787.0d1937ff.chunk.js": "/algorithms/static/js/787.0d1937ff.chunk.js",
-    "static/media/bg.jpg": "/algorithms/static/media/bg.971318c52485d1963a30.jpg",
-    "static/media/arr-hover.svg": "/algorithms/static/media/arr-hover.a52854e0c00e33cd4d38.svg",
-    "static/media/arr.svg": "/algorithms/static/media/arr.a1b9db493901c7af7652.svg",
-    "static/media/fibonacci-hover.svg": "/algorithms/static/media/fibonacci-hover.0c33a178af84d4f53cef.svg",
-    "static/media/fibonacci.svg": "/algorithms/static/media/fibonacci.7b6125fb7e8909f16ee0.svg",
-    "static/media/list-hover.svg": "/algorithms/static/media/list-hover.840c1f5ef69bb5541f5d.svg",
-    "static/media/list.svg": "/algorithms/static/media/list.d4fa2d9f0b3934eb26bd.svg",
-    "static/media/queue-hover.svg": "/algorithms/static/media/queue-hover.d1256b924ff9d8b9b243.svg",
-    "static/media/queue.svg": "/algorithms/static/media/queue.cbfa79052a8dc0c47071.svg",
-    "static/media/stack-hover.svg": "/algorithms/static/media/stack-hover.00b180b24bba43588954.svg",
-    "static/media/stack.svg": "/algorithms/static/media/stack.b55a8e80cb39e847aab9.svg",
-    "static/media/string-hover.svg": "/algorithms/static/media/string-hover.5f4edc84a0ed873770ca.svg",
-    "static/media/string.svg": "/algorithms/static/media/string.20f90662771c227e1bca.svg",
-    "index.html": "/algorithms/index.html",
-    "static/media/loader.svg": "/algorithms/static/media/loader.b935a8aeb021da7b2a90191a58ea95f4.svg",
-    "main.f19941f8.css.map": "/algorithms/static/css/main.f19941f8.css.map",
-    "main.86acf078.js.map": "/algorithms/static/js/main.86acf078.js.map",
-    "787.0d1937ff.chunk.js.map": "/algorithms/static/js/787.0d1937ff.chunk.js.map"
+    "main.css": "/Algorithms/static/css/main.64778f51.css",
+    "main.js": "/Algorithms/static/js/main.c7c7ca2b.js",
+    "static/js/787.0d1937ff.chunk.js": "/Algorithms/static/js/787.0d1937ff.chunk.js",
+    "static/media/bg.jpg": "/Algorithms/static/media/bg.971318c52485d1963a30.jpg",
+    "static/media/arr-hover.svg": "/Algorithms/static/media/arr-hover.a52854e0c00e33cd4d38.svg",
+    "static/media/arr.svg": "/Algorithms/static/media/arr.a1b9db493901c7af7652.svg",
+    "static/media/fibonacci-hover.svg": "/Algorithms/static/media/fibonacci-hover.0c33a178af84d4f53cef.svg",
+    "static/media/fibonacci.svg": "/Algorithms/static/media/fibonacci.7b6125fb7e8909f16ee0.svg",
+    "static/media/list-hover.svg": "/Algorithms/static/media/list-hover.840c1f5ef69bb5541f5d.svg",
+    "static/media/list.svg": "/Algorithms/static/media/list.d4fa2d9f0b3934eb26bd.svg",
+    "static/media/queue-hover.svg": "/Algorithms/static/media/queue-hover.d1256b924ff9d8b9b243.svg",
+    "static/media/queue.svg": "/Algorithms/static/media/queue.cbfa79052a8dc0c47071.svg",
+    "static/media/stack-hover.svg": "/Algorithms/static/media/stack-hover.00b180b24bba43588954.svg",
+    "static/media/stack.svg": "/Algorithms/static/media/stack.b55a8e80cb39e847aab9.svg",
+    "static/media/string-hover.svg": "/Algorithms/static/media/string-hover.5f4edc84a0ed873770ca.svg",
+    "static/media/string.svg": "/Algorithms/static/media/string.20f90662771c227e1bca.svg",
+    "index.html": "/Algorithms/index.html",
+    "static/media/loader.svg": "/Algorithms/static/media/loader.b935a8aeb021da7b2a90191a58ea95f4.svg",
+    "main.64778f51.css.map": "/Algorithms/static/css/main.64778f51.css.map",
+    "main.c7c7ca2b.js.map": "/Algorithms/static/js/main.c7c7ca2b.js.map",
+    "787.0d1937ff.chunk.js.map": "/Algorithms/static/js/787.0d1937ff.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f19941f8.css",
-    "static/js/main.86acf078.js"
+    "static/css/main.64778f51.css",
+    "static/js/main.c7c7ca2b.js"
   ]
 }
