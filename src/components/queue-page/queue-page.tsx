@@ -18,15 +18,16 @@ export const QueuePage: React.FC = () => {
   const [stack, setStack] = useState<(string | undefined)[]>(queue.printQueue());
   const [currentIndex, setCurrentIndex] = useState<number>(NaN);
   const [tail, setTail] = useState<number>(NaN);
-  const [head, setHead] = useState<number>(NaN);
-
+  const [head, setHead] = useState<number | null>(null);
+  const [loader, setLoader] = useState<number>(0);
+  console.log(head === null)
 
   const onChange = (e: React.FormEvent<HTMLInputElement>) => {
     setInputValue(e.currentTarget.value);
   }
 
   const addItem = async () => {
-
+    setLoader(1);
     setCurrentIndex(queue.getTail());
     setInputValue('');
     await delay(time);
@@ -37,23 +38,33 @@ export const QueuePage: React.FC = () => {
     setCurrentIndex(tail);
     await delay(time)
     setCurrentIndex(NaN);
+    setLoader(0);
   }
   const delItem = async () => {
+    setLoader(2);
     setCurrentIndex(queue.getHead());
     await delay(time);
     queue.dequeue();
     setStack([...queue.printQueue()]);
     setHead(queue.getHead())
     setCurrentIndex(NaN);
+    setLoader(0);
   }
   const clear = async () => {
     queue.reset();
     setStack([...queue.printQueue()]);
-    setHead(NaN);
+    setHead(null);
     setTail(queue.getTail());
     await delay(time)
   }
 
+  const validationLoader = (index: number) => {
+    if (loader && loader !== index) {
+      return true
+    } else {
+      return false
+    }
+  }
   return (
     <SolutionLayout title="Стек">
       <form className={styles.input} onSubmit={(e) => e.preventDefault()}>
@@ -67,24 +78,25 @@ export const QueuePage: React.FC = () => {
         <Button
           text='Добавить'
           onClick={() => addItem()}
-          disabled={inputValue ? false : true}
+          isLoader={loader === 1}
+          disabled={!inputValue || validationLoader(1)}
         />
         <Button
           text='Удалить'
           onClick={delItem}
-          disabled={head === null ? true : head < tail ? false : true}
+          isLoader={loader === 2}
+          disabled={head === null || head! >= tail ||  validationLoader(2)}
         />
         <Button
           text='Очистить'
           onClick={clear}
           extraClass={`${styles.btnNewArr} ${styles.btn}`}
-          disabled={head === null ? true : false}
+          disabled={head === null || validationLoader(3)}
         />
       </form>
       {stack &&
         <ul className={styles.circle}>
           {stack?.map((item, index) => {
-          console.log(head, index)
             return (
               <li key={index}>
                 <Circle

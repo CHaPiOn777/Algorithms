@@ -156,7 +156,7 @@ export const ListPage: React.FC = () => {
 
   return (
     <SolutionLayout title="Связный список">
-      <form onChange={e => e.preventDefault()} className={styles.form}>
+      <form onSubmit={e => e.preventDefault()} className={styles.form}>
         <Input
           extraClass={styles.input}
           maxLength={4}
