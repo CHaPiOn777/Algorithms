@@ -6,7 +6,7 @@ import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import styles from './fibonacci-page.module.css'
 
 export const FibonacciPage: React.FC = () => {
-  const [inputValue, setInputValue] = useState<number>(NaN);
+  const [inputValue, setInputValue] = useState<number | string>('');
   const [isShownTimeout, setShownTimeout] = useState<boolean>(false);
   const [fiboN, setFiboN] = useState<number[]>([]);
 
@@ -38,7 +38,7 @@ export const FibonacciPage: React.FC = () => {
       setFiboN([]);
 
       interval = setInterval(() => {
-        if (i <= inputValue + 1) {
+        if (i <= +inputValue + 1) {
           setFiboN((oldFibo) => {
             const newFibo = [...oldFibo!];
             newFibo.push(fib(i))
@@ -60,10 +60,10 @@ export const FibonacciPage: React.FC = () => {
 
   return (
     <SolutionLayout title="Последовательность Фибоначчи">
-      <div className={styles.input}>
-        <Input max={19} isLimitText={true} type='number' onChange={e => onChange(e)} />
+      <form className={styles.input} onSubmit={e => e.preventDefault()}>
+        <Input max={19} isLimitText={true} type='number' onChange={e => onChange(e)} value={inputValue} />
         <Button text={'Рассчитать'} isLoader={isShownTimeout} onClick={onClick} disabled={validation} />
-      </div>
+      </form>
       {fiboN &&
         <ul className={styles.circle}>
           {fiboN?.map((number, index) => {

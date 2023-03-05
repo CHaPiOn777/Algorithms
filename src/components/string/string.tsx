@@ -52,11 +52,10 @@ export const StringComponent: React.FC = () => {
   return (
 
     <SolutionLayout title="Строка">
-      <div className={styles.input}>
+      <form onSubmit={e => e.preventDefault()} className={styles.input}>
         <Input value={inputValue} isLimitText={true} maxLength={11} onChange={e => onChange(e)} type="text" />
         <Button text={'Развернуть'} onClick={onClick} isLoader={loader} disabled={inputValue ? false : true} />
-
-      </div>
+      </form>
       {letters &&
         <ul className={styles.circle}>
 

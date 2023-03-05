@@ -15,7 +15,8 @@ export type TNumber = Array<{
 export const SortingPage: React.FC = () => {
   const [checked, setChecked] = useState<string>('1');
   const [arrNuumber, setArr] = useState<TNumber>();
-  const [change, setChange] = useState<boolean>(true)
+  const [change, setChange] = useState<boolean>(true);
+  const [loader, setLoader] = useState<number>(0);
 
   const chengeCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(e.target.value)
@@ -46,16 +47,18 @@ export const SortingPage: React.FC = () => {
     let j = 0;
     let interval: NodeJS.Timeout;
     const end = arr.length - 1;
-
+    
     interval = setInterval(() => {
       if (i < end) {
         if (j < end - i) {
           if (ascending) {
+            setLoader(1)
             if (arr[j].number > arr[j + 1].number) {
               swap(arr, j, j + 1);
               setArr([...arr]);
             }
           } else {
+            setLoader(2)
             if (arr[j].number < arr[j + 1].number) {
               swap(arr, j, j + 1)
               setArr([...arr])
@@ -80,8 +83,11 @@ export const SortingPage: React.FC = () => {
         arr[0].color = 'modified';
         setArr([...arr]);
         clearInterval(interval)
+        setLoader(0)
       }
+     
     }, 200)
+    
   }
 
   const selectionSort = (arr: TNumber, ascending: boolean) => {
@@ -94,11 +100,13 @@ export const SortingPage: React.FC = () => {
       if (i < end) {
         if (j < end) {
           if (ascending) {
+            setLoader(1)
             if (arr[j].number < arr[i].number) {
               swap(arr, i, j);
               setArr([...arr!])
             }
           } else {
+            setLoader(2)
             if (arr[j].number > arr[i].number) {
               swap(arr, i, j)
               setArr([...arr!])
@@ -118,7 +126,8 @@ export const SortingPage: React.FC = () => {
           j = i + 1;
         }
       } else {
-        clearInterval(interval)
+        clearInterval(interval);
+        setLoader(0)
       }
     }, 300)
   }
@@ -135,16 +144,53 @@ export const SortingPage: React.FC = () => {
     setChange(!change)
   }
 
+  const validationLoader = (index: number) => {
+    if (loader && loader !== index) {
+      return true
+    } else {
+      return false
+    }
+  }
 
   return (
     <SolutionLayout title="Сортировка массива">
-      <div className={styles.input}>
-        <RadioInput label={'Выбор'} checked={checked === '1' ? true : false} value={'1'} onChange={chengeCheckbox} />
-        <RadioInput label={'Пузырек'} extraClass={styles.radio} checked={checked === '2' ? true : false} value={'2'} onChange={chengeCheckbox}/* onChange={e => onChange(e)} */ />
-        <Button text='По возрастанию' onClick={() => choiceSort(true)} sorting={Direction.Ascending} extraClass={`${styles.btnLeft} ${styles.btn}`}/* isLoader={isShownTimeout} *//*  onClick={onClick} disabled={validation}  */ />
-        <Button text='По убыванию' onClick={() => choiceSort(false)} extraClass={`${styles.btn}`} sorting={Direction.Descending}/* isLoader={isShownTimeout} *//*  onClick={onClick} disabled={validation}  */ />
-        <Button text='Новый массив' onClick={randomArr} extraClass={`${styles.btnNewArr} ${styles.btn}`}/* isLoader={isShownTimeout} *//*  onClick={onClick} disabled={validation}  */ />
-      </div>
+      <form onSubmit={e => e.preventDefault()} className={styles.input}>
+        <RadioInput
+          label={'Выбор'}
+          checked={checked === '1' ? true : false}
+          value={'1'}
+          onChange={chengeCheckbox}
+        />
+        <RadioInput
+          label={'Пузырек'}
+          extraClass={styles.radio}
+          checked={checked === '2' ? true : false}
+          value={'2'}
+          onChange={chengeCheckbox}
+        />
+        <Button
+          text='По возрастанию'
+          onClick={() => choiceSort(true)}
+          sorting={Direction.Ascending}
+          extraClass={`${styles.btnLeft} ${styles.btn}`}
+          disabled={validationLoader(1)}
+          isLoader={loader === 1}
+        />
+        <Button
+          text='По убыванию'
+          onClick={() => choiceSort(false)}
+          extraClass={`${styles.btn}`}
+          sorting={Direction.Descending}
+          disabled={validationLoader(2)}
+          isLoader={loader === 2}
+        />
+        <Button
+          text='Новый массив'
+          onClick={randomArr}
+          extraClass={`${styles.btnNewArr} ${styles.btn}`}
+          disabled={validationLoader(3)}
+        />
+      </form>
       {arrNuumber &&
         <ul className={styles.column}>
           {arrNuumber?.map(({ number, color }, index) => {
