@@ -1,11 +1,11 @@
 {
   "name": "algorithms-project",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "homepage": "https://chapion777.github.io/Algorithms/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.2",
-    "@testing-library/react": "^12.1.2",
+    "@testing-library/react": "^12.1.5",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.4.0",
     "@types/node": "^16.11.22",
@@ -48,6 +48,8 @@
   },
   "devDependencies": {
     "@types/react-router-dom": "^5.3.3",
-    "gh-pages": "^5.0.0"
+    "gh-pages": "^5.0.0",
+    "jest": "^29.5.0",
+    "react-test-renderer": "^17.0.2"
   }
 }
