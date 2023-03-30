@@ -66,7 +66,7 @@ export const QueuePage: React.FC = () => {
     }
   }
   return (
-    <SolutionLayout title="Стек">
+    <SolutionLayout title="Очередь">
       <form className={styles.input} onSubmit={(e) => e.preventDefault()}>
         <Input
           isLimitText={true}
