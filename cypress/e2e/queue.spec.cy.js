@@ -7,7 +7,7 @@ import {
 
 const time = 500;
 
-describe('Корректность работы стека', () => {
+describe('Корректность работы очереди', () => {
 
   const addFirstElem = (value) => {
     cy.clock()
@@ -25,6 +25,7 @@ describe('Корректность работы стека', () => {
         cy.get(delBtn).should('be.disabled')
         cy.get(clearBtn).should('be.disabled')
       })
+
     cy.get(circle).contains(value).parent()
       .invoke('attr', 'class')
       .then(classList => expect(classList).contains('circle_changing'))
@@ -33,6 +34,7 @@ describe('Корректность работы стека', () => {
 
   const addNextElem = (value) => {
     cy.clock()
+    cy.tick(time)
     cy.get('form')
       .within(() => {
         cy.get('input').type(value)
@@ -55,8 +57,8 @@ describe('Корректность работы стека', () => {
 
   beforeEach(() => {
     cy.visit(`/`)
-    cy.get('a[href*="/stack"]').click()
-    cy.contains('Стек')
+    cy.get('a[href*="/queue"]').click()
+    cy.contains('Очередь')
   });
 
   it('Если в инпуте пусто, то кнопка добавления недоступна.', () => {
@@ -68,8 +70,13 @@ describe('Корректность работы стека', () => {
     })
   })
 
-  it('Проверить корректность добавления элемента в стек', () => {
+  it('Проверить корректность добавления элемента в очередь', () => {
     cy.clock()
+
+    cy.get(circle).should('have.length', 8)
+      .invoke('attr', 'class')
+      .then(classList => expect(classList).contains('circle_default'))
+
     addFirstElem(1)
 
     cy.get(circle).then(el => {
@@ -80,7 +87,8 @@ describe('Корректность работы стека', () => {
         .children()
         .should('have.text', '1')
       cy.get(el[0])
-        .siblings('div').contains('top')
+        .siblings('div').contains('head')
+        .siblings('div').contains('tail')
     })
 
     addNextElem(2)
@@ -92,6 +100,8 @@ describe('Корректность работы стека', () => {
       cy.get(el[0])
         .children()
         .should('have.text', '1')
+      cy.get(el[0])
+        .siblings('div').contains('head')
       cy.get(el[1])
         .invoke('attr', 'class')
         .then(classList => expect(classList).contains('circle_default'))
@@ -99,7 +109,7 @@ describe('Корректность работы стека', () => {
         .children()
         .should('have.text', '2')
       cy.get(el[1])
-        .siblings('div').contains('top')
+        .siblings('div').contains('tail')
     })
 
   })
@@ -110,50 +120,52 @@ describe('Корректность работы стека', () => {
     addFirstElem(1)
     cy.tick(time)
     addNextElem(2)
-    cy.tick(time)
+
     cy.get('form').within(() => {
       cy.get('input').should('have.value', '')
       cy.get(addBtn).should('be.disabled')
       cy.get(delBtn).click()
     })
-
     cy.get(circle).then(el => {
       cy.get(el[0])
-        .invoke('attr', 'class')
-        .then(classList => expect(classList).contains('circle_default'))
-      cy.get(el[0])
-        .children()
-        .should('have.text', '1')
-      cy.get(el[1])
         .invoke('attr', 'class')
         .then(classList => expect(classList).contains('circle_changing'))
-    })
-    cy.tick(time)
-    cy.get(circle).then(el => {
-      cy.get(el[0])
-        .invoke('attr', 'class')
-        .then(classList => expect(classList).contains('circle_default'))
       cy.get(el[0])
         .children()
-        .should('have.text', '1')
-      cy.get(el[0])
-        .siblings('div').contains('top')
+        .should('be.empty')
+
+      cy.tick(time)
+
+      cy.get(el[1])
+        .invoke('attr', 'class')
+        .then(classList => expect(classList).contains('circle_default'))
+      cy.get(el[1])
+        .children()
+        .should('have.text', '2')
+      cy.get(el[1])
+        .siblings('div').contains('tail')
+        .siblings('div').contains('head')
     })
   })
 
   it('Проверить корректность работы кнопки Очистить', () => {
     cy.clock()
     addFirstElem(1)
+
     cy.tick(time)
+
     addNextElem(2)
+
     cy.tick(time)
+
     cy.get('form').within(() => {
       cy.get('input').should('have.value', '')
       cy.get(addBtn).should('be.disabled')
       cy.get(clearBtn).click()
     })
+
     cy.tick(time)
-    cy.get(circle).should('not.exist');
+
     cy.get('form')
     .within(() => {
       cy.get('input').should('have.value', '')
@@ -162,5 +174,5 @@ describe('Корректность работы стека', () => {
       cy.get(clearBtn).should('be.disabled')
     })
   })
-  
+
 })
