@@ -30,22 +30,22 @@ export const QueuePage: React.FC = () => {
     setLoader(1);
     setCurrentIndex(queue.getTail());
     setInputValue('');
-    await delay(time);
     queue.enqueue(inputValue);
     setStack([...queue.printQueue()]);
+    await delay(time);
     setHead(queue.getHead());
     setTail(queue.getTail());
     setCurrentIndex(tail);
-    await delay(time)
     setCurrentIndex(NaN);
     setLoader(0);
+ 
   }
   const delItem = async () => {
     setLoader(2);
     setCurrentIndex(queue.getHead());
-    await delay(time);
     queue.dequeue();
     setStack([...queue.printQueue()]);
+    await delay(time);
     setHead(queue.getHead())
     setCurrentIndex(NaN);
     setLoader(0);
@@ -66,7 +66,7 @@ export const QueuePage: React.FC = () => {
     }
   }
   return (
-    <SolutionLayout title="Стек">
+    <SolutionLayout title="Очередь">
       <form className={styles.input} onSubmit={(e) => e.preventDefault()}>
         <Input
           isLimitText={true}
@@ -76,18 +76,21 @@ export const QueuePage: React.FC = () => {
           value={inputValue}
         />
         <Button
+          data-cy="add"
           text='Добавить'
           onClick={() => addItem()}
           isLoader={loader === 1}
           disabled={!inputValue || validationLoader(1)}
         />
         <Button
+          data-cy="del"
           text='Удалить'
           onClick={delItem}
           isLoader={loader === 2}
-          disabled={head === null || head! >= tail ||  validationLoader(2)}
+          disabled={head === null || head! >= tail || validationLoader(2)}
         />
         <Button
+          data-cy="clear"
           text='Очистить'
           onClick={clear}
           extraClass={`${styles.btnNewArr} ${styles.btn}`}

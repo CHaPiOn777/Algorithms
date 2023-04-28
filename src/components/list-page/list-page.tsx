@@ -35,7 +35,7 @@ export const ListPage: React.FC = () => {
   }
 
   const addTail = async () => {
-    
+
     setLoader(2);
     setTailIndex(list.getTailIndex());
     setHeadSmallCircle(tailIndex);
@@ -71,13 +71,13 @@ export const ListPage: React.FC = () => {
   const addToIndex = async () => {
     setLoader(5);
     list.addToIndex(inputValue, +inputIndex);
-    
+
     for (let i = 0; i <= inputIndex; i++) {
       await delay(time);
       setColorChanging(i)
       setHeadSmallCircle(i);
     }
-    
+
     await delay(time);
     setInputValue('');
     setInputIndex('');
@@ -114,7 +114,7 @@ export const ListPage: React.FC = () => {
   }
 
   const popTail = async () => {
-    
+
     setLoader(4);
     setTailIndex(list.getTailIndex());
     setTailSmallCircle(tailIndex);
@@ -128,7 +128,7 @@ export const ListPage: React.FC = () => {
     setLoader(NaN);
   }
   const popHead = async () => {
-    
+
     setLoader(3);
     setHeadIndex(list.getHeadIndex());
     setTailSmallCircle(headIndex);
@@ -156,7 +156,7 @@ export const ListPage: React.FC = () => {
 
   return (
     <SolutionLayout title="Связный список">
-      <form onSubmit={e => e.preventDefault()} className={styles.form}>
+      <form data-cy="form" onSubmit={e => e.preventDefault()} className={styles.form}>
         <Input
           extraClass={styles.input}
           maxLength={4}
@@ -166,6 +166,7 @@ export const ListPage: React.FC = () => {
           value={inputValue}
         />
         <Button
+          data-cy="addHead"
           extraClass={styles.btn}
           text={'Добавить в head'}
           isLoader={loader === 1}
@@ -173,6 +174,7 @@ export const ListPage: React.FC = () => {
           disabled={validationInputValue || validationLoader(1)}
         />
         <Button
+          data-cy="addTail"
           extraClass={styles.btn}
           text={'Добавить в tail'}
           isLoader={loader === 2}
@@ -180,6 +182,7 @@ export const ListPage: React.FC = () => {
           disabled={validationInputValue || validationLoader(2)}
         />
         <Button
+          data-cy="delHead"
           extraClass={styles.btn}
           text={'Удалить из head'}
           isLoader={loader === 3}
@@ -187,6 +190,7 @@ export const ListPage: React.FC = () => {
           disabled={validationLoader(3)}
         />
         <Button
+          data-cy="delTail"
           extraClass={styles.btn}
           text={'Удалить из tail'}
           isLoader={loader === 4}
@@ -194,8 +198,9 @@ export const ListPage: React.FC = () => {
           disabled={validationLoader(4)}
         />
       </form>
-      <form onChange={e => e.preventDefault()} className={`${styles.form} ${styles.formIndex}`}>
+      <form data-cy="formIndex" onChange={e => e.preventDefault()} className={`${styles.form} ${styles.formIndex}`}>
         <Input
+          data-cy="inputIndex"
           max={list.getSize()}
           type='number'
           isLimitText={true} extraClass={styles.input}
@@ -204,6 +209,7 @@ export const ListPage: React.FC = () => {
           value={inputIndex}
         />
         <Button
+          data-cy="addIndex"
           extraClass={styles.btnIndex}
           text={'Добавить по индексу'}
           onClick={addToIndex}
@@ -211,6 +217,7 @@ export const ListPage: React.FC = () => {
           disabled={validationIndex || validationInputIndex || validationInputValue || validationLoader(5)}
         />
         <Button
+          data-cy="delIndex"
           extraClass={styles.btnIndex}
           text={'Удалить по индексу'}
           onClick={popToIndex}

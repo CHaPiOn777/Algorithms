@@ -7,11 +7,10 @@ import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { delay } from "../../constants/utils";
 import styles from "./string.module.css";
 
-const time = 1000;
+export const timeString = 1000;
 
 export const StringComponent: React.FC = () => {
   const [inputValue, setInputValue] = useState<string>('');
-  const [isShownTimeout, setShownTimeout] = useState<boolean>(false);
   const [letters, setLetters] = useState<string[]>([]);
   const [colorIndexStart, setColorIndexStart] = useState<number>(NaN);
   const [colorIndexEnd, setColorIndexEnd] = useState<number>(NaN);
@@ -29,7 +28,7 @@ export const StringComponent: React.FC = () => {
     while (start <= end) {
       setColorIndexStart(start);
       setColorIndexEnd(end);
-      await delay(time)
+      await delay(timeString)
       setLetters((oldLetters) => {
         const newLetters = [...oldLetters!];
         swap(newLetters, start, end);
@@ -53,14 +52,13 @@ export const StringComponent: React.FC = () => {
 
     <SolutionLayout title="Строка">
       <form onSubmit={e => e.preventDefault()} className={styles.input}>
-        <Input value={inputValue} isLimitText={true} maxLength={11} onChange={e => onChange(e)} type="text" />
-        <Button text={'Развернуть'} onClick={onClick} isLoader={loader} disabled={inputValue ? false : true} />
+        <Input data-testid="input" value={inputValue} isLimitText={true} maxLength={11} onChange={e => onChange(e)} type="text" />
+        <Button data-testid="btn" text={'Развернуть'} onClick={onClick} isLoader={loader} disabled={inputValue ? false : true} />
       </form>
       {letters &&
         <ul className={styles.circle}>
 
           {letters?.map((letter, index) => {
-            console.log(colorIndexEnd, colorIndexStart, index)
             return (
               <li key={index} >
                 <Circle
