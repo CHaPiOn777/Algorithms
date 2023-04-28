@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { delay } from "../../constants/utils";
+import { timeString } from "../string/string";
 import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
 import { Input } from "../ui/input/input";
@@ -63,18 +64,21 @@ export const StackPage: React.FC = () => {
           value={inputValue}
         />
         <Button
+          data-cy="add"
           text='Добавить'
           onClick={addItem}
           isLoader={loader === 1}
           disabled={!inputValue || validationLoader(1)}
         />
         <Button
+          data-cy="del"
           text='Удалить'
           onClick={delItem}
           isLoader={loader === 2}
           disabled={!stack.length || validationLoader(2)}
         />
         <Button
+          data-cy="clear"
           text='Очистить'
           onClick={clear}
           extraClass={`${styles.btnNewArr} ${styles.btn}`}

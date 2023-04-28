@@ -47,11 +47,14 @@ export const FibonacciPage: React.FC = () => {
           i++
         } else {
           setShownTimeout(false);
+          setInputValue('');
         }
       }, 500)
     }
+
     return (() => {
       if (interval) clearInterval(interval);
+      
     })
 
   }, [isShownTimeout]);

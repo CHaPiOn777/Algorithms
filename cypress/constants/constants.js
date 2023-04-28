@@ -1,0 +1,13 @@
+export const addBtn = '[data-cy="add"]';
+export const formIndex = '[data-cy="formIndex"]';
+export const form = '[data-cy="form"]';
+export const addTail = '[data-cy="addTail"]';
+export const addHead = '[data-cy="addHead"]';
+export const addIndex = '[data-cy="addIndex"]';
+export const delTail = '[data-cy="delTail"]';
+export const delHead = '[data-cy="delHead"]';
+export const delIndex = '[data-cy="delIndex"]';
+export const delBtn = '[data-cy="del"]';
+export const inputIndex = '[data-cy="inputIndex"]';
+export const clearBtn = '[data-cy="clear"]';
+export const circle = 'div[class*="circle_circle"]';
