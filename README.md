@@ -52,4 +52,5 @@
 
 Начальное состояние страницы
 
-#
+#Стек Технологий:
+React, Algorithms, Async, Animation
